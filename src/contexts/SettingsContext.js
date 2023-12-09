@@ -1,4 +1,3 @@
-// provider === component
 import { createContext, useEffect } from "react";
 import { defaultSettings } from "../config";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -9,33 +8,25 @@ import getColorPresets, {
 
 const initialState = {
   ...defaultSettings,
-
-  // Mode
   onToggleMode: () => {},
   onChangeMode: () => {},
 
-  // Direction
   onToggleDirection: () => {},
   onChangeDirection: () => {},
   onChangeDirectionByLang: () => {},
 
-  // Layout
   onToggleLayout: () => {},
   onChangeLayout: () => {},
 
-  // Contrast
   onToggleContrast: () => {},
   onChangeContrast: () => {},
 
-  // Color
   onChangeColor: () => {},
   setColor: defaultPreset,
   colorOption: [],
 
-  // Stretch
   onToggleStretch: () => {},
 
-  // Reset
   onResetSetting: () => {},
 };
 
@@ -57,10 +48,8 @@ const SettingsProvider = ({ children }) => {
     if (isArabic) {
       onChangeDirectionByLang("ar");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isArabic]);
 
-  // Mode
 
   const onToggleMode = () => {
     setSettings({
@@ -75,8 +64,6 @@ const SettingsProvider = ({ children }) => {
       themeMode: event.target.value,
     });
   };
-
-  // Direction
 
   const onToggleDirection = () => {
     setSettings({
@@ -99,7 +86,6 @@ const SettingsProvider = ({ children }) => {
     });
   };
 
-  // Layout
 
   const onToggleLayout = () => {
     setSettings({
@@ -116,8 +102,6 @@ const SettingsProvider = ({ children }) => {
     });
   };
 
-  // Contrast
-
   const onToggleContrast = () => {
     setSettings({
       ...settings,
@@ -132,7 +116,6 @@ const SettingsProvider = ({ children }) => {
     });
   };
 
-  // Color
 
   const onChangeColor = (event) => {
     setSettings({
@@ -141,16 +124,12 @@ const SettingsProvider = ({ children }) => {
     });
   };
 
-  // Stretch
-
   const onToggleStretch = () => {
     setSettings({
       ...settings,
       themeStretch: !settings.themeStretch,
     });
   };
-
-  // Reset
 
   const onResetSetting = () => {
     setSettings({
@@ -166,27 +145,22 @@ const SettingsProvider = ({ children }) => {
   return (
     <SettingsContext.Provider
       value={{
-        ...settings, // Mode
+        ...settings, 
         onToggleMode,
         onChangeMode,
 
-        // Direction
         onToggleDirection,
         onChangeDirection,
         onChangeDirectionByLang,
 
-        // Layout
         onToggleLayout,
         onChangeLayout,
 
-        // Contrast
         onChangeContrast,
         onToggleContrast,
 
-        // Stretch
         onToggleStretch,
 
-        // Color
         onChangeColor,
         setColor: getColorPresets(settings.themeColorPresets),
         colorOption: colorPresets.map((color) => ({
@@ -194,7 +168,6 @@ const SettingsProvider = ({ children }) => {
           value: color.main,
         })),
 
-        // Reset
         onResetSetting,
       }}
     >

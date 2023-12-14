@@ -163,7 +163,7 @@ const Chat_History = [
     type: "msg",
     subtype: "img",
     message: "Here You Go",
-    img: faker.image.abstract(),
+    img: faker.image.nature(),
     incoming: true,
     outgoing: false,
   },
@@ -173,7 +173,6 @@ const Chat_History = [
     incoming: false,
     outgoing: true,
   },
-
   {
     type: "msg",
     subtype: "doc",
@@ -184,8 +183,9 @@ const Chat_History = [
   {
     type: "msg",
     subtype: "link",
+    link: "https://meowsquare.com",
     preview: faker.image.cats(),
-    message: "Yep, I can also do that",
+    message: "Yep, I can also do that.",
     incoming: true,
     outgoing: false,
   },
@@ -198,7 +198,74 @@ const Chat_History = [
     outgoing: true,
   },
 ];
-
+const Shared_Links = [
+  {
+    type: "msg",
+    subtype: "link",
+    link: "https://goibibo.com",
+    preview: faker.image.cats(),
+    message: "Yep, I can also do that",
+    incoming: true,
+    outgoing: false,
+  },
+  {
+    type: "msg",
+    subtype: "link",
+    link: "https://CodeBattles.com",
+    preview: faker.image.city(),
+    message: "Wow So Beautiful",
+    incoming: true,
+    outgoing: false,
+  },
+  {
+    type: "msg",
+    subtype: "link",
+    link: "https://pedigree.com",
+    preview: faker.animal.dog(),
+    message: "Yep, I can also do that",
+    incoming: true,
+    outgoing: false,
+  },
+  {
+    type: "msg",
+    subtype: "link",
+    link: "https://pussy.com",
+    preview: faker.image.cats(),
+    message: "Yep, I can also do that",
+    incoming: true,
+    outgoing: false,
+  }
+]
+const Shared_Docs = [
+  {
+    type: "msg",
+    subtype: "doc",
+    message: "Yes sure, here you go.",
+    incoming: true,
+    outgoing: false,
+  },
+  {
+    type: "msg",
+    subtype: "doc",
+    message: "Yes sure, here you go.",
+    incoming: true,
+    outgoing: false,
+  },
+  {
+    type: "msg",
+    subtype: "doc",
+    message: "Yes sure, here you go.",
+    incoming: true,
+    outgoing: false,
+  },
+  {
+    type: "msg",
+    subtype: "doc",
+    message: "Yes sure, here you go.",
+    incoming: true,
+    outgoing: false,
+  }
+]; 
 const Message_options = [
   {
     title: "Reply",
@@ -226,5 +293,7 @@ export {
   Nav_Buttons,
   ChatList,
   Chat_History,
+  Shared_Links,
+  Shared_Docs,
   Message_options,
 };

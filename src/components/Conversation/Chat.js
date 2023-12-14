@@ -1,6 +1,6 @@
 import React from 'react';
 import { Chat_History } from '../../data';
-import { Message, Timeline } from './ChatElement';
+import { Message, Timeline, Image, Reply, Hyperlink } from './ChatElement';
 import { Box, Stack } from '@mui/material';
 export const Chat = () => {
     return (
@@ -10,6 +10,12 @@ export const Chat = () => {
                     Chat_History.map((chat)=>{
                         if(chat.type === "divider")
                             return (<Timeline {...chat}/>);
+                        else if(chat.subtype === "img")
+                            return (<Image {...chat}/>)
+                        else if(chat.subtype === "reply")
+                            return (<Reply {...chat}/>)
+                        else if(chat.subtype === "link")
+                            return (<Hyperlink {...chat}/>)
                         else if(!chat.subtype)
                             return (<Message {...chat}/>)
                     })

@@ -3,8 +3,11 @@ import { Box, Stack, Badge, Avatar, IconButton, Divider} from '@mui/material';
 import {styled, useTheme} from '@mui/material/styles';
 import { faker } from '@faker-js/faker';
 import { CaretDown, MagnifyingGlass, Phone, VideoCamera } from 'phosphor-react';
+import { useDispatch, useSelector } from 'react-redux';
+import {toggleSidebar} from "../../redux/slices/app.js"
 const Header = () => {
     const theme = useTheme();
+    const dispatch = useDispatch();
     const StyledBadge = styled(Badge)(({ theme }) => ({
         '& .MuiBadge-badge': {
           backgroundColor: '#44b700',
@@ -36,7 +39,9 @@ const Header = () => {
     return (
         <Box p={2} sx={{width:"100%", height: 100, backgroundColor: theme.palette.mode === "light" ? "#FBFAFF" : theme.palette.background.paper, boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)", display:"flex", alignItems: "center" }}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" width={"100%"}>
-                <Stack direction="row" alignItems="center" spacing={1.5}>
+                <Stack onClick={()=>{
+                    dispatch(toggleSidebar());
+                }} direction="row" alignItems="center" spacing={1.5}>
                     <Stack>
                         <StyledBadge
                             overlap="circular"

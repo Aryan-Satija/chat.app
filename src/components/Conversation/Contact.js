@@ -8,12 +8,12 @@ import AntSwitch from '../AntSwitch';
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const BlockDialogBox = (open, handleClose)=>{
+const BlockDialogBox = ({open, handleOpen})=>{
   return (<Dialog
             open={open}
             TransitionComponent={Transition}
             keepMounted
-            onClose={handleClose}
+            onClose={handleOpen}
             aria-describedby="alert-dialog-slide-description"
           >
           <DialogTitle>{"Do you really want to block this user?"}</DialogTitle>
@@ -24,19 +24,21 @@ const BlockDialogBox = (open, handleClose)=>{
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Disagree</Button>
-            <Button onClick={handleClose}>Agree</Button>
+            <Button onClick={handleOpen}>Disagree</Button>
+            <Button onClick={handleOpen}>Agree</Button>
           </DialogActions>
         </Dialog>)
 }
-const ClearDialogBox = (open, handleOpen)=>{
+const ClearDialogBox = ({open, handleOpen})=>{
+  console.log("-------------------------------------------");
+  console.log(open);
+  console.log(handleOpen);
+  console.log("-------------------------------------------");
   return (<Dialog
             open={open}
             TransitionComponent={Transition}
             keepMounted
-            onClose={()=>{
-              handleOpen(false);
-            }}
+            onClose={handleOpen}
             aria-describedby="alert-dialog-slide-description"
           >
           <DialogTitle>{"Use Google's location service?"}</DialogTitle>
@@ -47,8 +49,8 @@ const ClearDialogBox = (open, handleOpen)=>{
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={()=>{handleOpen(false)}}>Disagree</Button>
-            <Button onClick={()=>{handleOpen(false)}}>Agree</Button>
+            <Button onClick={handleOpen}>Disagree</Button>
+            <Button onClick={handleOpen}>Agree</Button>
           </DialogActions>
         </Dialog>)
 }
@@ -145,10 +147,10 @@ export const Contact = () => {
             </Stack>
         </Stack>
         {
-          openClearDialogBox && <ClearDialogBox open={openClearDialogBox} handleClose={setOpenClearDialogBox}/>
+          openClearDialogBox && <ClearDialogBox open={openClearDialogBox} handleOpen={()=>{setOpenClearDialogBox(false)}}/>
         }
         {
-          openBlockDialogBox && <ClearDialogBox open={openBlockDialogBox} handleClose={setOpenBlockDialogBox}/>
+          openBlockDialogBox && <ClearDialogBox open={openBlockDialogBox} handleOpen={()=>{setOpenBlockDialogBox(false)}}/>
         }
     </Stack>
   )

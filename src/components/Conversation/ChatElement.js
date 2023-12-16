@@ -1,4 +1,4 @@
-import { Stack, Divider, Typography, Box } from '@mui/material'
+import { Stack, Divider, Typography, Box, Link } from '@mui/material'
 import {useTheme} from "@mui/material/styles";
 import React from 'react'
 
@@ -99,7 +99,7 @@ export const Hyperlink = ({message, preview, link, incoming})=>{
                   <img src={preview} style={{borderRadius: "4px"}}/>
                 </Stack>
                 <Stack >
-                  <Typography variant='body2' sx={{color: "blue", cursor: "pointer", textDecoration: "underline"}}>{link}</Typography>
+                  <Link href={link} variant='body2' sx={{color: "blue", cursor: "pointer", textDecoration: "underline"}}>{link}</Link>
                   <Typography variant='body2'>{message}</Typography>
                 </Stack>
             </Box>

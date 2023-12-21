@@ -3,13 +3,12 @@ import { Divider, IconButton, Stack, TextField, Typography, Button } from '@mui/
 import background from "../../assets/Images/background.jpg"
 import { GoogleLogo, InstagramLogo, TwitterLogo } from 'phosphor-react';
 import { useForm } from "react-hook-form";
-
+import { register as signup} from '../../services/utilityFunctions/auth';
 const Signup = () => {
     const { handleSubmit, register, formState: { errors } } = useForm();
 
-    const submitHandler = async (data) => {
-        console.log("Form submitted successfully", data);
-        // Add logic for form submission here
+    const submitHandler = async(data) => {
+        await signup(data);
     };
 
     return (
@@ -19,18 +18,18 @@ const Signup = () => {
                     <Typography variant='h4'>Sign Up</Typography>
                     <Stack direction="row" spacing={2} width={"100%"} justifyContent={"space-between"}>
                         <Stack width={"100%"}>
-                            <TextField label="First name" type="text" variant='filled' {...register("firstname", {required: "*required"})}/>
+                            <TextField label="First name" type="text" variant='filled' {...register("firstName", {required: "*required"})}/>
                             {
-                                errors.firstname && (
-                                    <Typography color="error" variant='body2'>{errors.firstname.message}</Typography>
+                                errors.firstName && (
+                                    <Typography color="error" variant='body2'>{errors.firstName.message}</Typography>
                                 )
                             }
                         </Stack>
                         <Stack width={"100%"}>
-                            <TextField label="Last name" type="text" variant='filled' {...register("lastname", {required: "*required"})}/>
+                            <TextField label="Last name" type="text" variant='filled' {...register("lastName", {required: "*required"})}/>
                             {
-                                errors.lastname && (
-                                    <Typography color="error" variant='body2'>{errors.lastname.message}</Typography>
+                                errors.lastName && (
+                                    <Typography color="error" variant='body2'>{errors.lastName.message}</Typography>
                                 )
                             }
                         </Stack>

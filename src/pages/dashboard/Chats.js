@@ -1,7 +1,9 @@
+import React, {useState} from "react";
 import { Box, Stack, IconButton, Typography, InputBase, Button, Divider, Avatar, Badge } from "@mui/material";
 import {useTheme, styled, alpha} from "@mui/material/styles";
-import { Archive, ArrowFatLineDown, CircleDashed, MagnifyingGlass } from "phosphor-react";
+import { Archive, ArrowFatLineDown, CircleDashed, MagnifyingGlass, Users } from "phosphor-react";
 import { ChatList } from "../../data";
+import { Friends } from "./Friends";
 const ChatElement = ({id, img, name, msg, time, unread, pinned, online})=>{
     const theme = useTheme();
     const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -72,6 +74,13 @@ const ChatElement = ({id, img, name, msg, time, unread, pinned, online})=>{
 }
 function Chats(){
     const theme = useTheme();
+    const [openDialog, setOpenDialog] = useState(false);
+    const handleOpenDialogBox = function(){
+        setOpenDialog(true);
+    }
+    const handleCloseDialogBox = function(){
+        setOpenDialog(false);
+    }
     const SearchBar = styled("div")(({theme}) => ({
         borderRadius: 20,
         backgroundColor: alpha(theme.palette.background.default, 1), 
@@ -94,56 +103,66 @@ function Chats(){
         width: "100%"
     }))
     return (
-        <Box 
-            sx={{position: "relative", height: "100vh", width: "320px", backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.paper, boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)", overflowY: "auto"}}>
-            <Stack p={3} spacing={1.5}>
-                <Stack
-                    direction={"row"}
-                    alignItems={"center"}
-                    justifyContent={"space-between"} 
-                >
-                    <Typography variant="h5">Chats</Typography>
-                    <IconButton>
-                        <CircleDashed/>
-                    </IconButton>
-                </Stack>
-                <SearchBar>
-                    <SearchIcon>
-                        <MagnifyingGlass color="#709CE6"/>
-                    </SearchIcon>
-                    <Search  placeholder={"search...."}/>
-                </SearchBar>
-                <Stack spacing={1.5}>
-                    <Stack direction={"row"} alignItems={"center"}>
-                        <IconButton>
-                            <Archive/>
-                        </IconButton>
-                        <Button>
-                            Archive
-                        </Button>
+        <>
+            <Box 
+                sx={{position: "relative", height: "100vh", width: "320px", backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.paper, boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)", overflowY: "auto"}}>
+                <Stack p={3} spacing={1.5}>
+                    <Stack
+                        direction={"row"}
+                        alignItems={"center"}
+                        justifyContent={"space-between"} 
+                    >
+                        <Typography variant="h5">Chats</Typography>
+                        <Stack direction="row">
+                            <IconButton onClick={handleOpenDialogBox}>
+                                <Users/>
+                            </IconButton>
+                            <IconButton>
+                                <CircleDashed/>
+                            </IconButton>
+                        </Stack>
                     </Stack>
-                    <Divider/>
+                    <SearchBar>
+                        <SearchIcon>
+                            <MagnifyingGlass color="#709CE6"/>
+                        </SearchIcon>
+                        <Search  placeholder={"search...."}/>
+                    </SearchBar>
+                    <Stack spacing={1.5}>
+                        <Stack direction={"row"} alignItems={"center"}>
+                            <IconButton>
+                                <Archive/>
+                            </IconButton>
+                            <Button>
+                                Archive
+                            </Button>
+                        </Stack>
+                        <Divider/>
+                    </Stack>
                 </Stack>
-            </Stack>
-            <Stack p={2} direction={"column"} spacing={1.5}>
-                <Typography sx={{color:"#676767", fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center"}}>Pinned <ArrowFatLineDown/></Typography>
-                {
-                    ChatList.map((chat)=>{
-                        if(chat.pinned){
-                            return (<ChatElement key={chat.id} {...chat}/>)
-                        }
-                    })
-                }
-                <Typography sx={{color:"#676767", fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center"}}>All Chats <ArrowFatLineDown/></Typography>
-                {
-                    ChatList.map((chat)=>{
-                        if(!chat.pinned){
-                            return (<ChatElement key={chat.id} {...chat}/>)
-                        }
-                    })
-                }
-            </Stack>
-        </Box>
+                <Stack p={2} direction={"column"} spacing={1.5}>
+                    <Typography sx={{color:"#676767", fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center"}}>Pinned <ArrowFatLineDown/></Typography>
+                    {
+                        ChatList.map((chat)=>{
+                            if(chat.pinned){
+                                return (<ChatElement key={chat.id} {...chat}/>)
+                            }
+                        })
+                    }
+                    <Typography sx={{color:"#676767", fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center"}}>All Chats <ArrowFatLineDown/></Typography>
+                    {
+                        ChatList.map((chat)=>{
+                            if(!chat.pinned){
+                                return (<ChatElement key={chat.id} {...chat}/>)
+                            }
+                        })
+                    }
+                </Stack>
+            </Box>
+            {
+                openDialog && <Friends open={openDialog} handleClose={handleCloseDialogBox}/>
+            }
+        </>
     );
 }
 export default Chats;

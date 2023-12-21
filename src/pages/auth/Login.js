@@ -1,15 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Divider, IconButton, Stack, TextField, Typography, Button } from '@mui/material';
 import background from "../../assets/Images/background.jpg"
 import { GoogleLogo, InstagramLogo, TwitterLogo } from 'phosphor-react';
 import { useForm } from "react-hook-form";
+import {login} from "../../services/utilityFunctions/auth.js";
+import { useDispatch } from 'react-redux';
+import { login as sliceLogin } from '../../redux/slices/auth.js';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const { handleSubmit, register, formState: { errors } } = useForm();
+    const navigate  = useNavigate();
 
+    const [loading, setLoading] = useState(false);
+    const { handleSubmit, register, formState: { errors } } = useForm();
+    const dispatch = useDispatch();
+    
     const submitHandler = async (data) => {
-        console.log("Form submitted successfully", data);
-        // Add logic for form submission here
+        setLoading(true);
+        const info = await login(data);
+        if(info){
+            dispatch(sliceLogin(info?.token))
+            navigate("/app");
+        }
+        setLoading(false);
     };
 
     return (
@@ -46,7 +59,7 @@ const Login = () => {
                             <Typography color="error" variant='body2'>{errors.password.message}</Typography>
                         )}
                     </Stack>
-                    <Button sx={{ width: "100%" }} type="submit" variant="contained">LOG IN</Button>
+                    <Button sx={{ width: "100%" }} type="submit" variant="contained" disabled={loading}>LOG IN</Button>
                     <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"} sx={{ width: "100%" }}>
                         <Divider sx={{ width: '42%', color: '#F4F6F8' }} />
                         <Typography>OR</Typography>
@@ -54,13 +67,13 @@ const Login = () => {
                     </Stack>
                     <Stack direction={"row"} alignItems={"center"} justifyContent={"center"} spacing={2}>
                         <IconButton>
-                            <GoogleLogo />
+                            <GoogleLogo/>
                         </IconButton>
                         <IconButton>
-                            <InstagramLogo />
+                            <InstagramLogo/>
                         </IconButton>
                         <IconButton>
-                            <TwitterLogo />
+                            <TwitterLogo/>
                         </IconButton>
                     </Stack>
                 </Stack>

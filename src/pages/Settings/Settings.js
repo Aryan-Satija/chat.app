@@ -18,13 +18,20 @@ import {
   Note,
   Keyboard,
   Info,
+  SignOut,
 } from "phosphor-react";
 
 import { useTheme } from "@mui/material/styles";
 import { faker } from "@faker-js/faker";
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../redux/slices/auth";
 import ShortcutDialog from "./shortcutDialogbox";
+
 const Settings = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const theme = useTheme();
   const [openTheme, setOpenTheme] = useState(false);
 
@@ -45,6 +52,10 @@ const Settings = () => {
     setOpenShortcuts(false);
   };
 
+  const logOut = ()=>{
+    dispatch(logout())
+    navigate("/auth/login");
+  }
   const list = [
     {
       key: 0,
@@ -72,27 +83,27 @@ const Settings = () => {
     },
     {
       key: 4,
-      icon: <Image size={20} />,
-      title: "Chat Wallpaper",
-      onclick: () => {},
-    },
-    {
-      key: 5,
       icon: <Note size={20} />,
       title: "Request Account Info",
       onclick: () => {},
     },
     {
-      key: 6,
+      key: 5,
       icon: <Keyboard size={20} />,
       title: "Keyboard Shortcuts",
       onclick: handleOpenShortcuts,
     },
     {
-      key: 7,
-      icon: <Info size={20} />,
+      key: 6,
+      icon: <Info size={20}/>,
       title: "Help",
       onclick: () => {},
+    },
+    {
+      key: 7,
+      icon: <SignOut size={20} />,
+      title: "Log Out",
+      onclick: logOut,
     },
   ];
 

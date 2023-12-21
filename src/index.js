@@ -7,6 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider as ReduxProvider } from "react-redux"; 
 import SettingsProvider from "./contexts/SettingsContext";
 import { store } from "./redux/store";
+import { ToastContainer } from "react-toastify";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
@@ -15,6 +16,18 @@ root.render(
         <SettingsProvider>
           <BrowserRouter>
             <App />
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
           </BrowserRouter>
         </SettingsProvider>
       </ReduxProvider>

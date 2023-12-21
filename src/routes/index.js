@@ -30,7 +30,8 @@ export default function Router() {
       element: <AuthLayout/>,
       children:[
         {path:"login", element:<Login/>},
-        {path:"signup", element:<Signup/>}
+        {path:"signup", element:<Signup/>},
+        {path:"verify-otp", element:<OtpVerification/>}
       ]
     },
     { path: "*", element: <Navigate to="/404" replace /> },
@@ -45,6 +46,9 @@ const Settings = Loadable(
 )
 const Login = Loadable(
   lazy(()=> import("../pages/auth/Login"))
+)
+const OtpVerification = Loadable(
+  lazy(()=> import("../pages/auth/otpVerification"))
 )
 const Page404 = Loadable(
   lazy(() => import("../pages/Page404"))

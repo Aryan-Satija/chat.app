@@ -158,6 +158,7 @@ function Chats(){
                         })
                     }
                 </Stack>
+                
             </Box>
             {
                 openDialog && <Friends open={openDialog} handleClose={handleCloseDialogBox}/>

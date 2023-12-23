@@ -7,10 +7,9 @@ import {login} from "../../services/utilityFunctions/auth.js";
 import { useDispatch } from 'react-redux';
 import { login as sliceLogin } from '../../redux/slices/auth.js';
 import { useNavigate } from 'react-router-dom';
-
+import { setUserInfo } from '../../redux/slices/auth.js';
 const Login = () => {
     const navigate  = useNavigate();
-
     const [loading, setLoading] = useState(false);
     const { handleSubmit, register, formState: { errors } } = useForm();
     const dispatch = useDispatch();
@@ -19,7 +18,8 @@ const Login = () => {
         setLoading(true);
         const info = await login(data);
         if(info){
-            dispatch(sliceLogin(info?.token))
+            dispatch(sliceLogin(info?.token));
+            dispatch(setUserInfo(info?.user));
             navigate("/app");
         }
         setLoading(false);

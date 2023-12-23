@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     sidebar:{
         open: false,
-        type: "CONTACT"
+        type: "CONTACT",
+        select: 0,
+        conversationId: null,
     }
 }
 const slice = createSlice({
@@ -15,8 +17,14 @@ const slice = createSlice({
         },
         updateSidebarType: (state, action)=>{
             state.sidebar.type = action.payload.type;
+        },
+        setConversationId: (state, action)=>{
+            state.sidebar.conversationId = action.payload;
+        },
+        setSelect: (state, action)=>{
+            state.sidebar.select = action.payload
         }
     }
 })
-export const {toggleSidebar, updateSidebarType} = slice.actions;
+export const {toggleSidebar, updateSidebarType, setSelect, setConversationId} = slice.actions;
 export default slice.reducer;

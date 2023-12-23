@@ -2,13 +2,26 @@ import React, { useState } from 'react';
 import OtpInput from 'react-otp-input';
 import { Divider, Stack, Button, Typography } from '@mui/material';
 import background from "../../assets/Images/background.jpg"
+import { useSelector } from 'react-redux';
+import { verifyOtp } from '../../services/utilityFunctions/auth';
+import { useNavigate } from 'react-router-dom';
 const OtpVerification = () => {
+    const navigate = useNavigate();
     const [otp, setOtp] = useState('');
+    const userEmail = useSelector(state => state.auth.userInfo.email)
     const submitHandler = async(event)=>{
+        event.preventDefault();
         console.log(otp);
         const otpNumber = parseInt(otp);
-        console.log(otpNumber);
-        event.preventDefault();
+        const body = {
+            email: userEmail,
+            supplied_otp: otpNumber
+        }
+        const response = await verifyOtp(body);
+        if(response){
+            navigate("/auth/login");
+        }
+        // console.log(otpNumber);
     }
     return (<form onSubmit={submitHandler} style={{ width: "100%", height: "100%" }}>
             <Stack width={"100%"} height={"100%"} alignItems={"center"} justifyContent={"center"} sx={{ background: `url(${background})`, backgroundSize: "cover", color: "#F4F6F8" }}>

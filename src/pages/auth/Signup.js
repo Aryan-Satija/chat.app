@@ -4,11 +4,24 @@ import background from "../../assets/Images/background.jpg"
 import { GoogleLogo, InstagramLogo, TwitterLogo } from 'phosphor-react';
 import { useForm } from "react-hook-form";
 import { register as signup} from '../../services/utilityFunctions/auth';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUserEmail } from '../../redux/slices/auth';
 const Signup = () => {
+    const [loading, setLoading] = React.useState(false);
+    const dispatch = useDispatch();
     const { handleSubmit, register, formState: { errors } } = useForm();
-
+    const navigate  = useNavigate();
     const submitHandler = async(data) => {
-        await signup(data);
+        setLoading(true);
+        const response = await signup(data);
+        console.log(response);
+        setLoading(false);
+        if(response){
+            
+            dispatch(setUserEmail(data.email));
+            navigate("/auth/verify-otp")
+        }
     };
 
     return (
@@ -18,7 +31,7 @@ const Signup = () => {
                     <Typography variant='h4'>Sign Up</Typography>
                     <Stack direction="row" spacing={2} width={"100%"} justifyContent={"space-between"}>
                         <Stack width={"100%"}>
-                            <TextField label="First name" type="text" variant='filled' {...register("firstName", {required: "*required"})}/>
+                            <TextField label="First name" type="text" variant='filled' sx={{ width: "100%", '& input': { color: "#F4F6F8" } }} {...register("firstName", {required: "*required"})}/>
                             {
                                 errors.firstName && (
                                     <Typography color="error" variant='body2'>{errors.firstName.message}</Typography>
@@ -26,7 +39,7 @@ const Signup = () => {
                             }
                         </Stack>
                         <Stack width={"100%"}>
-                            <TextField label="Last name" type="text" variant='filled' {...register("lastName", {required: "*required"})}/>
+                            <TextField label="Last name" type="text" variant='filled' sx={{ width: "100%", '& input': { color: "#F4F6F8" } }} {...register("lastName", {required: "*required"})}/>
                             {
                                 errors.lastName && (
                                     <Typography color="error" variant='body2'>{errors.lastName.message}</Typography>
@@ -64,7 +77,7 @@ const Signup = () => {
                         )}
                     </Stack>
 
-                    <Button sx={{ width: "100%" }} type="submit" variant="contained">LOG IN</Button>
+                    <Button sx={{ width: "100%" }} type="submit" variant="contained" disabled={loading}>SIGN UP</Button>
                     <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"} sx={{ width: "100%" }}>
                         <Divider sx={{ width: '42%', color: '#F4F6F8' }} />
                         <Typography>OR</Typography>

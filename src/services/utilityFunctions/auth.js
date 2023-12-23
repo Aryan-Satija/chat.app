@@ -6,7 +6,7 @@ export const login = async(body)=>{
     const id = toast.loading("Please Wait...");
     try{
         const response = await apiConnector("POST", AUTH.LOGIN_API, body);
-        toast.update(id, { render: "login successfull", type: "success", isLoading: false});
+        toast.update(id, { render: "login successfull", type: "success", autoClose: 5000, isLoading: false});
         console.log(response);
         return response?.data;
     } catch(err){
@@ -18,35 +18,29 @@ export const login = async(body)=>{
     }
 }
 export const register = async(body)=>{
-    const register_util = async(body)=>{
-        try{
-            const response = await apiConnector("POST", AUTH.REGISTER_API, body);
-            return response;
-        } catch(err){
-            console.log(err);
-        }
+    const id = toast.loading("Please Wait...");
+    try{
+        const response = await apiConnector("POST", AUTH.REGISTER_API, body);
+        toast.update(id, { render: "otp sent successfully", type: "success", autoClose: 5000, isLoading: false});
+        return response;
+    } catch(err){
+        console.log(err);
+        if(err?.response)
+            toast.update(id, { render: `${err?.response?.data?.error}`, type: "error", autoClose:5000, isLoading: false});
+        else
+            toast.update(id, { render: "network issues", type: "error", autoClose: 5000, isLoading: false});
     }
-    await toast.promise(
-        new Promise(async(resolve, reject)=>{
-            const response = await register_util(body);
-            if(response) resolve(1);
-            else{
-                const error = new Error("Something went wrong");
-                reject(error);
-            }
-        }),{
-            pending: "loading",
-            success: "otp sent successfully",
-            error: "something went wrong"
-        }
-    )
 }
-export const verifyOtp = async(otp)=>{
-    const verifyOtpUtil = async(otp)=>{
-        try{
-            const response = await apiConnector("POST", AUTH.OTP_VERIFY_API)
-        } catch(err){
-            console.log(err);
-        }
+export const verifyOtp = async(body)=>{
+    const id = toast.loading("Please Wait...");
+    try{
+        const response = await apiConnector("POST", AUTH.OTP_VERIFY_API, body);
+        toast.update(id, { render: "otp matched", type: "success", autoClose: 5000, isLoading: false});
+        return response;
+    } catch(err){
+        if(err?.response)
+            toast.update(id, { render: `${err?.response?.data?.message}`, type: "error", autoClose:5000, isLoading: false});
+        else
+            toast.update(id, { render: "network issues", type: "error", autoClose: 5000, isLoading: false});
     }
 }

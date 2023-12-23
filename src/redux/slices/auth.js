@@ -3,6 +3,7 @@ const initialState = {
     isLoggedIn: false,
     token: "",
     isLoading: false,
+    userInfo: {}
 }
 const authSlice = createSlice({
     name: "auth",
@@ -18,8 +19,14 @@ const authSlice = createSlice({
         },
         toggleloading:(state, action)=>{
             state.isLoading = !state.isLoading;
+        },
+        setUserInfo:(state, action)=>{
+            state.userInfo = action.payload;
+        },
+        setUserEmail:(state, action)=>{
+            state.userInfo.email = action.payload;
         }
     }
 });
-export const {login, logout, toggleloading} = authSlice.actions;
+export const {login, logout, toggleloading, setUserInfo, setUserEmail} = authSlice.actions;
 export default authSlice.reducer;

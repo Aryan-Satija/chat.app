@@ -3,9 +3,10 @@ import storage from 'redux-persist/lib/storage';
 
 import appReducer from './slices/app';
 import authReducer from './slices/auth';
+import chatReducer from './slices/chat';
+
 // import audioCallReducer from './slices/audioCall';
 // import videoCallReducer from './slices/videoCall';
-// import conversationReducer from './slices/conversation';
 
 
 
@@ -20,7 +21,7 @@ const rootPersistConfig = {
 const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
-//   conversation: conversationReducer,
+  chat: chatReducer,
 //   audioCall: audioCallReducer,
 //   videoCall: videoCallReducer,
 });

@@ -6,6 +6,7 @@ const initialState = {
         type: "CONTACT",
         select: 0,
         conversationId: null,
+        room_id: null,
     }
 }
 const slice = createSlice({
@@ -23,8 +24,11 @@ const slice = createSlice({
         },
         setSelect: (state, action)=>{
             state.sidebar.select = action.payload
+        },
+        Selectchat: (state, action)=>{
+            state.sidebar.room_id = action.payload; 
         }
     }
 })
-export const {toggleSidebar, updateSidebarType, setSelect, setConversationId} = slice.actions;
+export const {toggleSidebar, updateSidebarType, setSelect, setConversationId, Selectchat} = slice.actions;
 export default slice.reducer;

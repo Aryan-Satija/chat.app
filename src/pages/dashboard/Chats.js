@@ -1,9 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Box, Stack, IconButton, Typography, InputBase, Button, Divider, Avatar, Badge } from "@mui/material";
 import {useTheme, styled, alpha} from "@mui/material/styles";
 import { Archive, ArrowFatLineDown, CircleDashed, MagnifyingGlass, Users } from "phosphor-react";
 import { ChatList } from "../../data";
 import { Friends } from "./Friends";
+import { socket } from "../../socket";
+import { useSelector } from "react-redux";
 const ChatElement = ({id, img, name, msg, time, unread, pinned, online})=>{
     const theme = useTheme();
     const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -73,6 +75,16 @@ const ChatElement = ({id, img, name, msg, time, unread, pinned, online})=>{
     </Box>) 
 }
 function Chats(){
+    const user_id = useSelector((state)=>state.auth.userInfo._id);
+    useEffect(()=>{
+        if(socket){
+            socket.emit("user_messages", {user_id}, (data)=>{
+                console.log("--------------------------------");
+                console.log(data);
+                console.log("--------------------------------");
+            })
+        }
+    }, [socket])
     const theme = useTheme();
     const [openDialog, setOpenDialog] = useState(false);
     const handleOpenDialogBox = function(){

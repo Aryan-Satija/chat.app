@@ -59,16 +59,17 @@ const FriendsList = () => {
 
 const RequestsList = () => {
   const [requests, setRequests] = useState([]);
+  const token = useSelector((state) => state.auth.token);
   useEffect(() => {
     (async()=>{
-        const list = await FetchFriendRequests();
+        const list = await FetchFriendRequests(token);
         if(list) setRequests(list);
     })()
   }, []);
   return (
     <>
-      {requests.map((el, idx) => {
-        return <FriendRequestElement key={idx} {...el.sender} id={el._id} />;
+      {requests.map((el) => {
+        return <FriendRequestElement key={el._id} {...el.sender} id={el._id} />;
       })}
     </>
   );

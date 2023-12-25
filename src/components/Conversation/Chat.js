@@ -5,21 +5,18 @@ import { socket } from '../../socket';
 import { useSelector } from 'react-redux';
 export const Chat = () => {
     const [chatHistory, setChatHistory] = useState([]);
-    
-    console.log("--------------------------------");
-    console.log(chatHistory);
-    console.log("--------------------------------");
 
     const room_id = useSelector((state)=>{
         return state.app.sidebar.room_id
     })
+
     useEffect(()=>{
         if(socket){
             socket.emit("get_messages", {room_id}, (messages)=>{
                 setChatHistory(messages);
             })
         }
-    }, []);
+    }, [room_id]);
     useEffect(()=>{
         if(socket){
             socket.on("new_message",({conversation_id, message}) => {

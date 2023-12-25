@@ -7,8 +7,11 @@ import { Friends } from "./Friends";
 import { socket } from "../../socket";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchChats } from "../../redux/slices/chat";
+import { Selectchat } from "../../redux/slices/app";
 const ChatElement = ({id, img, name, msg, time, unread, pinned, online})=>{
+    const room_id = useSelector((state)=>state.app.sidebar.room_id);
     const theme = useTheme();
+    const dispatch = useDispatch();
     const StyledBadge = styled(Badge)(({ theme }) => ({
         '& .MuiBadge-badge': {
           backgroundColor: '#44b700',
@@ -37,17 +40,19 @@ const ChatElement = ({id, img, name, msg, time, unread, pinned, online})=>{
           },
         },
     }));
-    return (<Box
+    return(<Box
         sx={{
-            backgroundColor: theme.palette.mode === "light" ? "#fff" : theme.palette.background.default,
+            backgroundColor: room_id === id ? (theme.palette.primary.main) : (theme.palette.mode === "light" ? "#fff" : theme.palette.background.default),
             width: "100%",
             paddingY: 2,
             borderRadius: 1,
             display: "flex",
             alignItems: "center",
             paddingX: 2,
+            cursor: "pointer", 
             justifyContent:"space-between" 
         }}
+        onClick={()=>{dispatch(Selectchat(id))}}
     >
         {
             online ? (<StyledBadge
@@ -81,11 +86,11 @@ function Chats(){
     useEffect(()=>{
         if(socket){
             socket.emit("user_messages", {user_id}, (data)=>{
-                console.log(data);
+                console.log("chatlist", data);
                 dispatch(fetchChats({id: user_id, data: data}));
             })
         }
-    }, [socket])
+    }, [])
     const theme = useTheme();
     const [openDialog, setOpenDialog] = useState(false);
     const handleOpenDialogBox = function(){

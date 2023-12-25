@@ -21,7 +21,7 @@ const chatSlice = createSlice({
                     to_user_id : this_user._id,
                     img: faker.image.avatar(),
                     name: `${this_user.firstName} ${this_user.lastName}`,
-                    msg: el?.messages?.text,
+                    msg: el.messages.length > 0 ? el.messages.at(-1).text : "",
                     time: el?.messages?.created_at,
                     unread: false,
                     pinned: false,

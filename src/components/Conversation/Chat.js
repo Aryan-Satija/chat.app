@@ -2,9 +2,11 @@ import React, {useState, useEffect} from 'react';
 import { Message, Timeline, Image, Reply, Hyperlink } from './ChatElement';
 import { Box, Stack } from '@mui/material';
 import { socket } from '../../socket';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setChatHistory, pushChat } from '../../redux/slices/app';
 export const Chat = () => {
-    const [chatHistory, setChatHistory] = useState([]);
+    const dispatch = useDispatch();
+    const chatHistory = useSelector((state)=>state.app.sidebar.chatHistory);
 
     const room_id = useSelector((state)=>{
         return state.app.sidebar.room_id
@@ -13,7 +15,7 @@ export const Chat = () => {
     useEffect(()=>{
         if(socket){
             socket.emit("get_messages", {room_id}, (messages)=>{
-                setChatHistory(messages);
+                dispatch(setChatHistory(messages));
             })
         }
     }, [room_id]);
@@ -21,9 +23,7 @@ export const Chat = () => {
         if(socket){
             socket.on("new_message",({conversation_id, message}) => {
                 if(room_id === conversation_id){
-                    chatHistory.push(message);
-                    console.log(chatHistory);
-                    setChatHistory(chatHistory);
+                    dispatch(pushChat(message));
                 }
                 else{
                     // update chat list....

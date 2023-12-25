@@ -251,6 +251,7 @@ import {
                       to,
                       type: containsUrl(value) ? "link" : "text",
                     });
+                    setValue("");
                   }}
                 >
                   <PaperPlaneTilt color="#ffffff" />

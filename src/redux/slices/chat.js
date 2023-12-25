@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { faker } from "@faker-js/faker";
 const initialState = {
-    chat: []
+    chat: [],
 }
 
 const chatSlice = createSlice({
@@ -13,11 +13,12 @@ const chatSlice = createSlice({
             const list = action.payload.data.map((el)=>{
                 let this_user;
                 if(el.participants[0]._id.toString() === user_id)
-                    this_user = el.participants[0];
-                else
                     this_user = el.participants[1];
+                else
+                    this_user = el.participants[0];
                 return {
-                    id: this_user._id,
+                    id: el?._id,
+                    to_user_id : this_user._id,
                     img: faker.image.avatar(),
                     name: `${this_user.firstName} ${this_user.lastName}`,
                     msg: el?.messages?.text,
@@ -30,21 +31,28 @@ const chatSlice = createSlice({
             state.chat = list;
         },
         AddDirectChat: (state, action)=>{
+            console.log("in add direct chat....");
             const user_id = action.payload.id;
             const this_conversation = action.payload.conversation;
+            console.log(user_id);
+            console.log(this_conversation)
             const user = this_conversation.participants.find(
               (elm) => elm._id.toString() !== user_id
             );
-            state.direct_chat.conversations = state.direct_chat.conversations.filter(
-              (el) => el?.id !== this_conversation._id
+            state.chat = state.chat.filter(
+              (el) =>{
+                if(el?.id !== this_conversation._id)
+                  return el;
+              } 
             );
             state.chat.push({
               id: this_conversation._id,
+              to_user_id: user._id,
               name: `${user?.firstName} ${user?.lastName}`,
               online: user?.status === "online",
               img: faker.image.avatar(),
               msg: faker.music.songName(),
-              time: Date.now(),
+              time: null,
               unread: false,
               pinned: false,
               online: false
@@ -63,12 +71,12 @@ const chatSlice = createSlice({
                   );
                   return {
                     id: this_conversation._id,
-                    user_id: user?._id,
+                    to_user_id: user?._id,
                     name: `${user?.firstName} ${user?.lastName}`,
                     online: user?.status === "Online",
                     img: faker.image.avatar(),
                     msg: faker.music.songName(),
-                    time: Date.now(),
+                    time: null,
                     unread: false,
                     pinned: false,
                     online: false

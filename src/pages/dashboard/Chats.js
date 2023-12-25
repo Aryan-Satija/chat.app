@@ -5,7 +5,8 @@ import { Archive, ArrowFatLineDown, CircleDashed, MagnifyingGlass, Users } from 
 import { ChatList } from "../../data";
 import { Friends } from "./Friends";
 import { socket } from "../../socket";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchChats } from "../../redux/slices/chat";
 const ChatElement = ({id, img, name, msg, time, unread, pinned, online})=>{
     const theme = useTheme();
     const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -46,7 +47,6 @@ const ChatElement = ({id, img, name, msg, time, unread, pinned, online})=>{
             alignItems: "center",
             paddingX: 2,
             justifyContent:"space-between" 
-
         }}
     >
         {
@@ -75,13 +75,14 @@ const ChatElement = ({id, img, name, msg, time, unread, pinned, online})=>{
     </Box>) 
 }
 function Chats(){
-    const user_id = useSelector((state)=>state.auth.userInfo._id);
+    const dispatch = useDispatch();
+    const user_id = useSelector(state => state.auth.userInfo._id);
+    const ChatList = useSelector(state => state.chat.chat);
     useEffect(()=>{
         if(socket){
             socket.emit("user_messages", {user_id}, (data)=>{
-                console.log("--------------------------------");
                 console.log(data);
-                console.log("--------------------------------");
+                dispatch(fetchChats({id: user_id, data: data}));
             })
         }
     }, [socket])
@@ -153,14 +154,14 @@ function Chats(){
                     </Stack>
                 </Stack>
                 <Stack p={2} direction={"column"} spacing={1.5}>
-                    <Typography sx={{color:"#676767", fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center"}}>Pinned <ArrowFatLineDown/></Typography>
+                    {/* <Typography sx={{color:"#676767", fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center"}}>Pinned <ArrowFatLineDown/></Typography>
                     {
                         ChatList.map((chat)=>{
                             if(chat.pinned){
                                 return (<ChatElement key={chat.id} {...chat}/>)
                             }
                         })
-                    }
+                    } */}
                     <Typography sx={{color:"#676767", fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center"}}>All Chats <ArrowFatLineDown/></Typography>
                     {
                         ChatList.map((chat)=>{

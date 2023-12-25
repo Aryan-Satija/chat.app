@@ -1,6 +1,7 @@
-import { Stack, Divider, Typography, Box, Link } from '@mui/material'
-import {useTheme} from "@mui/material/styles";
 import React from 'react'
+import {useTheme} from "@mui/material/styles";
+import {useSelector} from 'react-redux';
+import { Stack, Divider, Typography, Box, Link } from '@mui/material'
 
 export const Timeline = ({text}) => {
   return (
@@ -12,8 +13,10 @@ export const Timeline = ({text}) => {
   )
 }
 
-export const Message = ({message, incoming}) => {
+export const Message = ({text, from, to}) => {
     const theme = useTheme();
+    const userInfo = useSelector((state)=>state.auth.userInfo)
+    const incoming = (to === userInfo._id); 
     return (
     <Stack width={"100%"}>
         <Box 
@@ -28,7 +31,7 @@ export const Message = ({message, incoming}) => {
                     backgroundColor: theme.palette.background.paper
                 }}
         >
-            <Typography variant='body2'>{message}</Typography>
+            <Typography variant='body2'>{text}</Typography>
         </Box>
     </Stack>
   )

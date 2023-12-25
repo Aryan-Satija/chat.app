@@ -13,11 +13,12 @@ const DashboardLayout = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn);
   const userInfo = useSelector((state)=>state.auth.userInfo);
-  const chat = useSelector((state) => state.chat);
+  const chat = useSelector((state) => state.chat.chat);
   useEffect(()=>{
     if(!isLoggedIn) navigate("/auth/login");
   }, []);
   useEffect(() => {
+    console.log(".");
     if (isLoggedIn) {
       window.onload = function () {
         if (!window.location.hash) {

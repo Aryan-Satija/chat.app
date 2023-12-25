@@ -40,7 +40,7 @@ const FriendsList = () => {
   const token = useSelector((state) => state.auth.token)
   useEffect(() => {
     // iife
-    // immediately invoked function expressios 
+    // immediately invoked function expressions 
     (async()=>{
         const list = await FetchFriends(token);
         if(list)

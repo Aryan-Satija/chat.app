@@ -12,10 +12,9 @@ const Conversation = () => {
   const appOptions = useSelector((state) => {
     return state.app;
   });
-  console.log(appOptions)
   return (
     <Box sx={{ display: 'flex', height: '100vh', width: 'calc(100vw - 420px)' }}>
-      {appOptions.sidebar.conversationId ? (
+      {appOptions.sidebar.room_id ? (
         <Stack height={'100%'} maxHeight={'100vh'} width={'100%'}>
           <Header />
           <Chat />

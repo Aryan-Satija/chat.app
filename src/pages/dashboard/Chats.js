@@ -84,13 +84,15 @@ function Chats(){
     const user_id = useSelector(state => state.auth.userInfo._id);
     const ChatList = useSelector(state => state.chat.chat);
     useEffect(()=>{
+        console.log("step-1");
         if(socket){
+            console.log("step-2");
             socket.emit("user_messages", {user_id}, (data)=>{
-                console.log("chatlist", data);
+                console.log("step-3");
                 dispatch(fetchChats({id: user_id, data: data}));
             })
         }
-    }, [])
+    }, [socket])
     const theme = useTheme();
     const [openDialog, setOpenDialog] = useState(false);
     const handleOpenDialogBox = function(){

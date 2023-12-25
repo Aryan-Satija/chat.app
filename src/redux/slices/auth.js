@@ -13,10 +13,6 @@ const authSlice = createSlice({
             state.isLoggedIn = true;
             state.token = action.payload;
         },
-        logout:(state)=>{
-            state.isLoggedIn = false;
-            state.token = "";
-        },
         toggleloading:(state, action)=>{
             state.isLoading = !state.isLoading;
         },
@@ -25,8 +21,14 @@ const authSlice = createSlice({
         },
         setUserEmail:(state, action)=>{
             state.userInfo.email = action.payload;
-        }
+        },
+        resetAuthSlice:(state)=>{
+            state.isLoggedIn = false;
+            state.token = "";
+            state.isLoading = false;
+            state.userInfo = {};
+        },
     }
 });
-export const {login, logout, toggleloading, setUserInfo, setUserEmail} = authSlice.actions;
+export const {login, resetAuthSlice, toggleloading, setUserInfo, setUserEmail} = authSlice.actions;
 export default authSlice.reducer;

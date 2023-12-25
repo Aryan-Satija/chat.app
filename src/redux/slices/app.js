@@ -23,8 +23,14 @@ const slice = createSlice({
         },
         Selectchat: (state, action)=>{
             state.sidebar.room_id = action.payload; 
+        },
+        resetAppSlice: (state)=>{
+            state.sidebar.open = false;
+            state.sidebar.type = "CONTACT";
+            state.sidebar.select = 0;
+            state.sidebar.room_id = null;
         }
     }
 })
-export const {toggleSidebar, updateSidebarType, setSelect, Selectchat} = slice.actions;
+export const {toggleSidebar, updateSidebarType, setSelect, Selectchat, resetAppSlice} = slice.actions;
 export default slice.reducer;

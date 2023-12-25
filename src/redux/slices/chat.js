@@ -85,8 +85,11 @@ const chatSlice = createSlice({
               }
             );
         },
+        resetChatSlice:(state)=>{
+          state.chat = [];
+        }
     }
 })
 
-export const {fetchChats, AddDirectChat, UpdateDirectChat} = chatSlice.actions;
+export const {fetchChats, AddDirectChat, UpdateDirectChat, resetChatSlice} = chatSlice.actions;
 export default chatSlice.reducer;

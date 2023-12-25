@@ -25,7 +25,9 @@ import { useTheme } from "@mui/material/styles";
 import { faker } from "@faker-js/faker";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../redux/slices/auth";
+import { resetAuthSlice } from "../../redux/slices/auth";
+import { resetChatSlice } from "../../redux/slices/chat";
+import { resetAppSlice } from "../../redux/slices/app";
 import ShortcutDialog from "./shortcutDialogbox";
 
 const Settings = () => {
@@ -53,7 +55,9 @@ const Settings = () => {
   };
 
   const logOut = ()=>{
-    dispatch(logout())
+    dispatch(resetAuthSlice());
+    dispatch(resetAppSlice());
+    dispatch(resetChatSlice());
     navigate("/auth/login");
   }
   const list = [

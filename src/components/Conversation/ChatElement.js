@@ -81,8 +81,10 @@ export const Image = ({message, img, incoming})=>{
             </Box>
   </Stack>)
 }
-export const Hyperlink = ({message, preview, link, incoming})=>{
+export const Hyperlink = ({message, preview, text, to})=>{
   const theme = useTheme();
+  const userInfo = useSelector((state)=>state.auth.userInfo)
+  const incoming = (to === userInfo._id); 
   return (<Stack width={"100%"}>
             <Box 
                 sx={{ 
@@ -102,7 +104,7 @@ export const Hyperlink = ({message, preview, link, incoming})=>{
                   <img src={preview} style={{borderRadius: "4px"}}/>
                 </Stack>
                 <Stack >
-                  <Link href={link} variant='body2' sx={{color: "blue", cursor: "pointer", textDecoration: "underline"}}>{link}</Link>
+                  <Link href={text} variant='body2' sx={{color: "blue", cursor: "pointer", textDecoration: "underline"}}>{text}</Link>
                   <Typography variant='body2'>{message}</Typography>
                 </Stack>
             </Box>

@@ -19,18 +19,22 @@ import {
   Keyboard,
   Info,
   SignOut,
+  User
 } from "phosphor-react";
 
 import { useTheme } from "@mui/material/styles";
 import { faker } from "@faker-js/faker";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { resetAuthSlice } from "../../redux/slices/auth";
 import { resetChatSlice } from "../../redux/slices/chat";
 import { resetAppSlice } from "../../redux/slices/app";
 import ShortcutDialog from "./shortcutDialogbox";
+import { ProfileDialogBox } from "./profileDialogBox";
 
 const Settings = () => {
+  const userInfo = useSelector((state)=>state.auth.userInfo);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -75,8 +79,8 @@ const Settings = () => {
     },
     {
       key: 2,
-      icon: <Key size={20} />,
-      title: "Security",
+      icon: <User size={20}/>,
+      title: "Update Profile",
       onclick: () => {},
     },
     {
@@ -143,11 +147,11 @@ const Settings = () => {
             {/* Profile */}
             <Stack direction="row" spacing={3}>
               <Avatar
-                src={faker.image.avatar()}
+                src={userInfo.avatar}
                 sx={{ height: 56, width: 56 }}
               />
               <Stack spacing={0.5}>
-                <Typography variant="article">{`${faker.name.firstName()} ${faker.name.lastName()}`}</Typography>
+                <Typography variant="article">{userInfo.firstName + " " + userInfo.lastName}</Typography>
                 <Typography variant="body2">{faker.random.words()}</Typography>
               </Stack>
             </Stack>
@@ -188,6 +192,7 @@ const Settings = () => {
         <ShortcutDialog open={openShortcuts} handleClose={()=>{
           setOpenShortcuts(false);
         }}/>
+        <ProfileDialogBox/>
       </Stack>
     </>
   );

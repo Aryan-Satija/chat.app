@@ -1,6 +1,5 @@
 import React from 'react'
 import {Box, Divider, IconButton, Stack, Avatar} from "@mui/material";
-import { faker } from '@faker-js/faker';
 import logo from "../../assets/Images/ChatAppLogo.png";
 import {Nav_Buttons} from "../../data/index.js";
 import { Gear } from "phosphor-react";
@@ -12,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import { setSelect } from '../../redux/slices/app.js';
 
 const Sidebar = () => {
+    const userInfo = useSelector((state)=>state.auth.userInfo);
+    console.log(userInfo);
     const theme = useTheme();
     const dispatch = useDispatch();
     const select = useSelector((state) => state.app.sidebar.select)
@@ -63,8 +64,7 @@ const Sidebar = () => {
                 <ThemeSwitch onChange={()=>{
                 onToggleMode();
                 }}/>
-                <Avatar>
-                    <img src={faker.image.avatar()}></img>
+                <Avatar src={userInfo.avatar}>
                 </Avatar>
             </Stack>
             </Stack>

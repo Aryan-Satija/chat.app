@@ -5,6 +5,7 @@ import { DEFAULT_PATH } from "../config";
 import LoadingScreen from "../components/LoadingScreen";
 import AuthLayout from "../pages/auth/authLayout";
 import Signup from "../pages/auth/Signup";
+import Call from "../components/Call/call";
 const Loadable = (Component) => (props) => {
   return (
     <Suspense fallback={<LoadingScreen />}>
@@ -21,6 +22,7 @@ export default function Router() {
         { element: <Navigate to={DEFAULT_PATH} replace />, index: true },
         { path: "app", element:<GeneralApp />},      
         { path: "settings", element:<Settings/>},
+        {path: "call", element:<Call/>},
         { path: "404", element:<Page404 /> },
         { path: "*", element:<Navigate to="/404" replace /> },
       ],

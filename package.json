@@ -16,6 +16,7 @@
     "dotenv": "^16.3.1",
     "emoji-mart": "^5.5.2",
     "framer-motion": "^7.5.3",
+    "link-preview-js": "^3.0.5",
     "phosphor-react": "^1.4.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -35,7 +36,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set GENERATE_SOURCEMAP=false && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

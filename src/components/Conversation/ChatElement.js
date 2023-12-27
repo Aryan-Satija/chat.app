@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useTheme} from "@mui/material/styles";
 import {useSelector} from 'react-redux';
 import { Stack, Divider, Typography, Box, Link } from '@mui/material'
-
+import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
 export const Timeline = ({text}) => {
   return (
     <Stack width={"100%"} justifyContent={"center"} spacing={2} alignItems={"center"} direction={"row"}>
@@ -82,6 +82,13 @@ export const Image = ({message, img, incoming})=>{
   </Stack>)
 }
 export const Hyperlink = ({message, preview, text, to})=>{
+  useEffect(() => {
+    getLinkPreview(text)
+      .then((data) => {
+      })
+      .catch((error) => {
+      });
+  }, []); 
   const theme = useTheme();
   const userInfo = useSelector((state)=>state.auth.userInfo)
   const incoming = (to === userInfo._id); 

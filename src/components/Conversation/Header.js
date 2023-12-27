@@ -7,6 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import {toggleSidebar} from "../../redux/slices/app.js"
 const Header = () => {
     const theme = useTheme();
+    const room_id = useSelector((state)=>state.app.sidebar.room_id);
+    const chatList = useSelector((state)=>state.chat.chat);
+    const friend = chatList.find((el)=>{
+        return (el.id === room_id)
+    });
+    console.log(chatList);
     const dispatch = useDispatch();
     const StyledBadge = styled(Badge)(({ theme }) => ({
         '& .MuiBadge-badge': {
@@ -48,11 +54,11 @@ const Header = () => {
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                             variant="dot"
                         >
-                            <Avatar src={faker.image.avatar()}/>
+                            <Avatar src={friend.img}/>
                         </StyledBadge>
                     </Stack>
                     <Stack>
-                        <Box sx={{fontSize: "0.9rem", fontWeight: 800}}>{faker.name.fullName()}</Box>
+                        <Box sx={{fontSize: "0.9rem", fontWeight: 800}}>{friend.name}</Box>
                         <Box sx={{fontSize: "0.8rem", fontWeight: 400}}>Online</Box>
                     </Stack>
                 </Stack>

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import { Box, Stack, IconButton, Typography, InputBase, Button, Divider, Avatar, Badge } from "@mui/material";
 import {useTheme, styled, alpha} from "@mui/material/styles";
 import { Archive, ArrowFatLineDown, CircleDashed, MagnifyingGlass, Users } from "phosphor-react";
-import { ChatList } from "../../data";
 import { Friends } from "./Friends";
 import { socket } from "../../socket";
 import { useSelector, useDispatch } from "react-redux";

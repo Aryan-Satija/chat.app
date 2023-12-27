@@ -245,7 +245,7 @@ import {
                 <IconButton
                   onClick={() => {
                     socket.emit("text_message", {
-                      message: containsUrl(value) ? linkify(value) : value,
+                      message: value,
                       conversation_id: room_id,
                       from: user_id,
                       to,

@@ -61,7 +61,7 @@ const SettingsProvider = ({ children }) => {
   const onChangeMode = (event) => {
     setSettings({
       ...settings,
-      themeMode: event.target.value,
+      themeMode: event,
     });
   };
 

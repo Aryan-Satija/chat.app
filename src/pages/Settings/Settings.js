@@ -26,12 +26,10 @@ import { useTheme } from "@mui/material/styles";
 import { faker } from "@faker-js/faker";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { resetAuthSlice } from "../../redux/slices/auth";
-import { resetChatSlice } from "../../redux/slices/chat";
-import { resetAppSlice } from "../../redux/slices/app";
 import ShortcutDialog from "./shortcutDialogbox";
 import { ProfileDialogBox } from "./profileDialogBox";
-
+import { Theme } from "./Theme";
+import { Logout } from "./Logout";
 const Settings = () => {
   const userInfo = useSelector((state)=>state.auth.userInfo);
 
@@ -39,17 +37,11 @@ const Settings = () => {
   const navigate = useNavigate();
 
   const theme = useTheme();
-  const [openTheme, setOpenTheme] = useState(false);
-
-  const handleOpenTheme = () => {
-    setOpenTheme(true);
-  };
-
-  const handleCloseTheme = () => {
-    setOpenTheme(false);
-  };
+  
   const [openShortcuts, setOpenShortcuts] = useState(false);
-
+  const [openTheme, setOpenTheme] = useState(false);
+  const [openLogout, setOpenLogout] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
   const handleOpenShortcuts = () => {
     setOpenShortcuts(true);
   };
@@ -58,12 +50,6 @@ const Settings = () => {
     setOpenShortcuts(false);
   };
 
-  const logOut = ()=>{
-    dispatch(resetAuthSlice());
-    dispatch(resetAppSlice());
-    dispatch(resetChatSlice());
-    navigate("/auth/login");
-  }
   const list = [
     {
       key: 0,
@@ -81,13 +67,13 @@ const Settings = () => {
       key: 2,
       icon: <User size={20}/>,
       title: "Update Profile",
-      onclick: () => {},
+      onclick: () => {setOpenProfile(true)},
     },
     {
       key: 3,
       icon: <PencilCircle size={20} />,
       title: "Theme",
-      onclick: handleOpenTheme,
+      onclick: ()=>{setOpenTheme(true)},
     },
     {
       key: 4,
@@ -111,7 +97,9 @@ const Settings = () => {
       key: 7,
       icon: <SignOut size={20} />,
       title: "Log Out",
-      onclick: logOut,
+      onclick: ()=>{
+        setOpenLogout(true);
+      },
     },
   ];
 
@@ -192,7 +180,9 @@ const Settings = () => {
         <ShortcutDialog open={openShortcuts} handleClose={()=>{
           setOpenShortcuts(false);
         }}/>
-        <ProfileDialogBox/>
+        <ProfileDialogBox open={openProfile} handleClose={()=>{setOpenProfile(false)}}/>
+        <Theme open={openTheme} handleClose={()=>{setOpenTheme(false)}}/>
+        <Logout open={openLogout} handleClose={()=>{setOpenLogout(false)}}/>
       </Stack>
     </>
   );

@@ -7,7 +7,6 @@ export const login = async(body)=>{
     try{
         const response = await apiConnector("POST", AUTH.LOGIN_API, body);
         toast.update(id, { render: "login successfull", type: "success", autoClose: 5000, isLoading: false});
-        console.log(response);
         return response?.data;
     } catch(err){
         console.log(err);

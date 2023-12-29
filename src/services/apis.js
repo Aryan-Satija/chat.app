@@ -7,7 +7,8 @@ export const AUTH = {
 }
 
 export const USER = {
-    UPDATE_PROFILE_API: BASE_URL + "/user/update-pfp",
+    UPDATE_PROFILE_API: BASE_URL + "/user/update-profile",
+    UPDATE_DISPLAY_PICTURE: BASE_URL + "/user/update-pfp",
     FETCH_USERS_API: BASE_URL + "/user/get-users",
     FRIEND_REQUESTS_API: BASE_URL + "/user/get-friend-requests",
     FETCH_FRIENDS_API: BASE_URL + "/user/get-friends"

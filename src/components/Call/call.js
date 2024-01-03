@@ -11,11 +11,12 @@ import {
 } from "@mui/material";
 import { MagnifyingGlass, Phone } from "phosphor-react";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTheme, styled, alpha } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
-import { faker } from "@faker-js/faker";
 const CallLogElement = ({id, img, name, msg, time, unread, pinned, online})=>{
   const theme = useTheme();
+  const navigate = useNavigate();
   const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
       backgroundColor: '#44b700',
@@ -59,7 +60,7 @@ const CallLogElement = ({id, img, name, msg, time, unread, pinned, online})=>{
             <Typography sx={{fontSize: "0.9rem", fontWeight: 800}}>{name}</Typography>
           </Stack>
           <IconButton>
-            <Phone color={theme.palette.chart.green[0]}/>
+            <Phone color={theme.palette.chart.green[0]} onClick={()=>{navigate("/room")}}/>
           </IconButton>
       </Stack>        
   </Box>)

@@ -23,7 +23,7 @@ const chatSlice = createSlice({
                     name: `${this_user.firstName} ${this_user.lastName}`,
                     msg: el.messages.length > 0 ? el.messages.at(-1).text : "",
                     time: el?.messages?.created_at,
-                    unread: false,
+                    unread: 0,
                     pinned: false,
                     online: false
                 }
@@ -31,32 +31,26 @@ const chatSlice = createSlice({
             state.chat = list;
         },
         AddDirectChat: (state, action)=>{
-            console.log("in add direct chat....");
             const user_id = action.payload.id;
             const this_conversation = action.payload.conversation;
-            console.log(user_id);
-            console.log(this_conversation)
-            const user = this_conversation.participants.find(
-              (elm) => elm._id.toString() !== user_id
-            );
-            state.chat = state.chat.filter(
+            state.chat = state.chat.map(
               (el) =>{
                 if(el?.id !== this_conversation._id)
                   return el;
+                return ({
+                          id: this_conversation._id,
+                          to_user_id: el?.to_user_id,
+                          name: el?.name,
+                          online: el?.online,
+                          img: el?.img,
+                          msg: this_conversation.messages.length > 0 ? this_conversation.messages.at(-1).text : "",
+                          time: null,
+                          unread: false,
+                          pinned: false,
+                          online: false
+                        });
               } 
             );
-            state.chat.push({
-              id: this_conversation._id,
-              to_user_id: user._id,
-              name: `${user?.firstName} ${user?.lastName}`,
-              online: user?.status === "online",
-              img: faker.image.avatar(),
-              msg: faker.music.songName(),
-              time: null,
-              unread: false,
-              pinned: false,
-              online: false
-            });
         },
         UpdateDirectChat(state, action) {
             const user_id = action.payload.id;
@@ -75,7 +69,7 @@ const chatSlice = createSlice({
                     name: `${user?.firstName} ${user?.lastName}`,
                     online: user?.status === "Online",
                     img: faker.image.avatar(),
-                    msg: faker.music.songName(),
+                    msg: this_conversation.messages.length > 0 ? this_conversation.messages.at(-1).text : "",
                     time: null,
                     unread: false,
                     pinned: false,

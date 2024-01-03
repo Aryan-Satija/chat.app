@@ -27,7 +27,7 @@ const Login = () => {
 
     return (
         <form onSubmit={handleSubmit(submitHandler)} style={{ width: "100%", height: "100%" }}>
-            <Stack width={"100%"} height={"100%"} alignItems={"center"} justifyContent={"center"} sx={{ background: `url(${background})`, backgroundSize: "cover", color: "#F4F6F8" }}>
+            <Stack width={"100%"} minWidth={"320px"} height={"100vh"} alignItems={"center"} justifyContent={"center"} sx={{ background: `url(${background})`, backgroundSize: "cover", color: "#F4F6F8" }}>
                 <Stack width={0.4} minWidth={"320px"} spacing={2} direction={"column"} alignItems={"center"} sx={{ color: "white", backgroundColor: "rgba(0, 0, 0, 0.5)", padding: "20px", borderRadius: "10px", backdropFilter: "blur(5px)" }}>
                     <Typography variant='h4'>Login</Typography>
                     <Stack width={"100%"}>

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { Box, Stack, IconButton, Typography, InputBase, Button, Divider, Avatar, Badge } from "@mui/material";
 import {useTheme, styled, alpha} from "@mui/material/styles";
-import { Archive, ArrowFatLineDown, CircleDashed, MagnifyingGlass, Users } from "phosphor-react";
+import { ArchiveBox, ArrowFatLineDown, MagnifyingGlass, Users } from "phosphor-react";
 import { Friends } from "./Friends";
 import { socket } from "../../socket";
 import { useSelector, useDispatch } from "react-redux";
@@ -82,12 +82,10 @@ function Chats(){
     const dispatch = useDispatch();
     const user_id = useSelector(state => state.auth.userInfo._id);
     const ChatList = useSelector(state => state.chat.chat);
+    const [search, setSearch] = useState(false); 
     useEffect(()=>{
-        console.log("step-1");
         if(socket){
-            console.log("step-2");
             socket.emit("user_messages", {user_id}, (data)=>{
-                console.log("step-3");
                 dispatch(fetchChats({id: user_id, data: data}));
             })
         }
@@ -101,24 +99,18 @@ function Chats(){
         setOpenDialog(false);
     }
     const SearchBar = styled("div")(({theme}) => ({
-        borderRadius: 20,
+        borderRadius: search ? 5 : 20,
         backgroundColor: alpha(theme.palette.background.default, 1), 
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing(0),
         marginLeft : theme.spacing(0),
-        width: "100%",
-        display: "flex",
-        alignItem: "center",
-        justifyContent: "space-between"
-    }))
-    const SearchIcon = styled("div")(({theme}) => ({
-        padding: theme.spacing(0.9, 1),
-        position: "absolute",
+        width: (search ? "100%" : "12.5%"),
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "space-between",
+        cursor: "pointer",
     }))
     const Search = styled(InputBase)(({theme}) =>({
-        paddingLeft: `calc(0.6rem + ${theme.spacing(4)})`,
+        paddingLeft: `calc(0.2rem + ${theme.spacing(1)})`,
         width: "100%"
     }))
     return (
@@ -136,21 +128,18 @@ function Chats(){
                             <IconButton onClick={handleOpenDialogBox}>
                                 <Users/>
                             </IconButton>
-                            <IconButton>
-                                <CircleDashed/>
-                            </IconButton>
                         </Stack>
                     </Stack>
                     <SearchBar>
-                        <SearchIcon>
-                            <MagnifyingGlass color="#709CE6"/>
-                        </SearchIcon>
+                        <IconButton>
+                            <MagnifyingGlass color={theme.palette.primary.main} size={20} onClick={()=>{setSearch(!search)}}/>
+                        </IconButton>
                         <Search  placeholder={"search...."}/>
                     </SearchBar>
                     <Stack spacing={1.5}>
                         <Stack direction={"row"} alignItems={"center"}>
                             <IconButton>
-                                <Archive/>
+                                <ArchiveBox/>
                             </IconButton>
                             <Button>
                                 Archive

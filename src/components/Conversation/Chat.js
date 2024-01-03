@@ -4,12 +4,13 @@ import { Box, Stack } from '@mui/material';
 import { socket } from '../../socket';
 import { useSelector, useDispatch } from 'react-redux';
 import { setChatHistory, pushChat } from '../../redux/slices/app';
+import { AddDirectChat } from '../../redux/slices/chat';
 export const Chat = () => {
     const dispatch = useDispatch();
     const chatHistory = useSelector((state)=>state.app.sidebar.chatHistory);
 
     const chatContainerRef = useRef(null);
-
+    const userInfo = useSelector((state)=>state.auth.userInfo);
     const room_id = useSelector((state)=>{
         return state.app.sidebar.room_id
     })
@@ -25,7 +26,8 @@ export const Chat = () => {
     useEffect(()=>{
         // scrollToBottom();
         if(socket){
-            socket.on("new_message",({conversation_id, message}) => {
+            socket.on("new_message",({conversation_id, message, chat}) => {
+                dispatch(AddDirectChat({id: userInfo._id, conversation: chat}))
                 if(room_id === conversation_id){
                     dispatch(pushChat(message));
                 }

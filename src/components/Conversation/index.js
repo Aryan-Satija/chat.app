@@ -15,10 +15,12 @@ const Conversation = () => {
   return (
     <Box sx={{ display: 'flex', height: '100vh', width: 'calc(100vw - 420px)' }}>
       {appOptions.sidebar.room_id ? (
-        <Stack height={'100%'} maxHeight={'100vh'} width={'100%'}>
-          <Header />
-          <Chat />
-          <Footer />
+        <>
+          <Stack height={'100%'} maxHeight={'100vh'} width={'100%'}>
+            <Header />
+            <Chat />
+            <Footer />
+          </Stack>
           {appOptions.sidebar.open && appOptions.sidebar.type === 'CONTACT' && (
             <Stack width={'320px'}>
               <Contact />
@@ -34,7 +36,7 @@ const Conversation = () => {
               <Shared />
             </Stack>
           )}
-        </Stack>
+        </>
       ) : (
         <Stack width={"100%"} height={"100%"} alignItems={"center"} justifyContent={"center"}>
           <NoChat/>

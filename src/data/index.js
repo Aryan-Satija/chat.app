@@ -33,7 +33,7 @@ const Nav_Buttons = [
   {
     index: 1,
     icon: <Users />,
-    path: ""
+    path: "/groups"
   },
   {
     index: 2,

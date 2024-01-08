@@ -6,6 +6,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import AuthLayout from "../pages/auth/authLayout";
 import Signup from "../pages/auth/Signup";
 import Call from "../components/Call/call";
+import GeneralGroupsApp from '../pages/dashboard/GeneralGroupsApp.js';
 const Loadable = (Component) => (props) => {
   return (
     <Suspense fallback={<LoadingScreen />}>
@@ -20,10 +21,11 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to={DEFAULT_PATH} replace />, index: true },
-        { path: "app", element:<GeneralApp />},      
+        { path: "app", element:<GeneralApp/>},      
+        { path: "groups", element: <GeneralGroupsApp/>},
         { path: "settings", element:<Settings/>},
         { path: "call", element:<Call/> },
-        { path: "404", element:<Page404 /> },
+        { path: "404", element:<Page404/> },
         { path: "*", element:<Navigate to="/404" replace /> },
       ],
     },

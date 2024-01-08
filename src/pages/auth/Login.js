@@ -13,7 +13,6 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const { handleSubmit, register, formState: { errors } } = useForm();
     const dispatch = useDispatch();
-    
     const submitHandler = async (data) => {
         setLoading(true);
         const info = await login(data);
@@ -24,7 +23,6 @@ const Login = () => {
         }
         setLoading(false);
     };
-
     return (
         <form onSubmit={handleSubmit(submitHandler)} style={{ width: "100%", height: "100%" }}>
             <Stack width={"100%"} minWidth={"320px"} height={"100vh"} alignItems={"center"} justifyContent={"center"} sx={{ background: `url(${background})`, backgroundSize: "cover", color: "#F4F6F8" }}>

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { faker } from "@faker-js/faker";
 const initialState = {
     chat: [],
+    groupChats: []
 }
 
 const chatSlice = createSlice({
@@ -45,7 +46,7 @@ const chatSlice = createSlice({
                           img: el?.img,
                           msg: this_conversation.messages.length > 0 ? this_conversation.messages.at(-1).text : "",
                           time: null,
-                          unread: false,
+                          unread: 0,
                           pinned: false,
                           online: false
                         });
@@ -53,31 +54,45 @@ const chatSlice = createSlice({
             );
         },
         UpdateDirectChat(state, action) {
-            const user_id = action.payload.id;
-            const this_conversation = action.payload.conversation;
-            state.chat = state.chat.map(
-              (el) => {
-                if (el?.id !== this_conversation._id) {
-                  return el;
-                } else {
-                  const user = this_conversation.participants.find(
-                    (elm) => elm._id.toString() !== user_id
-                  );
-                  return {
-                    id: this_conversation._id,
-                    to_user_id: user?._id,
-                    name: `${user?.firstName} ${user?.lastName}`,
-                    online: user?.status === "Online",
-                    img: faker.image.avatar(),
-                    msg: this_conversation.messages.length > 0 ? this_conversation.messages.at(-1).text : "",
-                    time: null,
-                    unread: false,
-                    pinned: false,
-                    online: false
-                  };
-                }
+          const user_id = action.payload.id;
+          const this_conversation = action.payload.conversation;
+          state.chat = state.chat.map(
+            (el) => {
+              if (el?.id !== this_conversation._id) {
+                return el;
+              } else {
+                const user = this_conversation.participants.find(
+                  (elm) => elm._id.toString() !== user_id
+                );
+                return {
+                  id: this_conversation._id,
+                  to_user_id: user?._id,
+                  name: `${user?.firstName} ${user?.lastName}`,
+                  online: user?.status === "Online",
+                  img: faker.image.avatar(),
+                  msg: this_conversation.messages.length > 0 ? this_conversation.messages.at(-1).text : "",
+                  time: null,
+                  unread: 0,
+                  pinned: false,
+                  online: false
+                };
               }
-            );
+            }
+          );
+        },
+        FetchGroupChats:(state, action)=>{
+          state.groupChats = action.payload.map((grp)=>{
+            return {
+              group_id: grp._id,
+              name: grp.name,
+              admin: grp.admin,
+              participants: grp.participants,
+              unread: 0,
+              img:grp?.profile,
+              latestChat: grp.chats.length > 0 ? grp.chats.at(-1) : '',
+              time: null
+            }
+          })
         },
         resetChatSlice:(state)=>{
           state.chat = [];
@@ -85,5 +100,5 @@ const chatSlice = createSlice({
     }
 })
 
-export const {fetchChats, AddDirectChat, UpdateDirectChat, resetChatSlice} = chatSlice.actions;
+export const {fetchChats, AddDirectChat, UpdateDirectChat, FetchGroupChats, resetChatSlice} = chatSlice.actions;
 export default chatSlice.reducer;

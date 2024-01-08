@@ -6,6 +6,7 @@ const initialState = {
         type: "CONTACT",
         select: 0,
         room_id: null,
+        group_room_id: null,  
         chatHistory: []
     }
 }
@@ -25,6 +26,9 @@ const slice = createSlice({
         Selectchat: (state, action)=>{
             state.sidebar.room_id = action.payload; 
         },
+        Selectgroup: (state, action) => {
+            state.sidebar.group_room_id = action.payload;
+        },
         setChatHistory: (state, action)=>{
             state.sidebar.chatHistory = action.payload;
         },
@@ -37,8 +41,9 @@ const slice = createSlice({
             state.sidebar.select = 0;
             state.sidebar.room_id = null;
             state.chatHistory = [];
+            state.group_room_id = null;
         }
     }
 })
-export const {toggleSidebar, updateSidebarType, setSelect, Selectchat, setChatHistory, pushChat, resetAppSlice} = slice.actions;
+export const {toggleSidebar, updateSidebarType, setSelect, Selectchat, setChatHistory, pushChat, Selectgroup, resetAppSlice} = slice.actions;
 export default slice.reducer;

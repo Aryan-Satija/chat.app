@@ -1,47 +1,19 @@
 import React, {useState, useEffect} from "react";
 import { Box, Stack, IconButton, Typography, InputBase, Button, Divider, Avatar, Badge } from "@mui/material";
 import {useTheme, styled, alpha} from "@mui/material/styles";
-import { ArchiveBox, ArrowFatLineDown, MagnifyingGlass, Users } from "phosphor-react";
-import { Friends } from "./Friends";
+import { ArchiveBox, ArrowFatLineDown, MagnifyingGlass, Users, Plus } from "phosphor-react";
+import { CreateGroup } from "./CreateGroup";
 import { socket } from "../../socket";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchChats } from "../../redux/slices/chat";
-import { Selectchat } from "../../redux/slices/app";
-const ChatElement = ({id, img, name, msg, time, unread, pinned, online})=>{
-    const room_id = useSelector((state)=>state.app.sidebar.room_id);
+import { FetchGroupChats } from "../../redux/slices/chat";
+import { Selectgroup } from "../../redux/slices/app";
+const GroupChatElement = ({id, img, name, latestChat, unread, time})=>{
+    const group_room_id = useSelector((state)=>state.app.sidebar.group_room_id);
     const theme = useTheme();
     const dispatch = useDispatch();
-    const StyledBadge = styled(Badge)(({ theme }) => ({
-        '& .MuiBadge-badge': {
-          backgroundColor: '#44b700',
-          color: '#44b700',
-          boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-          '&::after': {
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            borderRadius: '50%',
-            animation: 'ripple 1.2s infinite ease-in-out',
-            border: '1px solid currentColor',
-            content: '""',
-          },
-        },
-        '@keyframes ripple': {
-          '0%': {
-            transform: 'scale(.8)',
-            opacity: 1,
-          },
-          '100%': {
-            transform: 'scale(2.4)',
-            opacity: 0,
-          },
-        },
-    }));
     return(<Box
         sx={{
-            backgroundColor: room_id === id ? (theme.palette.primary.main) : (theme.palette.mode === "light" ? "#fff" : theme.palette.background.default),
+            backgroundColor: group_room_id === id ? (theme.palette.primary.main) : (theme.palette.mode === "light" ? "#fff" : theme.palette.background.default),
             width: "100%",
             paddingY: 2,
             borderRadius: 1,
@@ -51,21 +23,13 @@ const ChatElement = ({id, img, name, msg, time, unread, pinned, online})=>{
             cursor: "pointer", 
             justifyContent:"space-between" 
         }}
-        onClick={()=>{dispatch(Selectchat(id))}}
+        onClick={()=>{dispatch(Selectgroup(id))}}
     >
-        {
-            online ? (<StyledBadge
-                        overlap="circular"
-                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                        variant="dot"
-                      >
-                            <Avatar src={img} />
-                        </StyledBadge>) : (<Avatar src={img} />)
-        }
+        <Avatar src={img} />
         <Box sx={{display: "flex", width:"170px", justifyContent: "space-between"}}>
             <Stack direction="column">
                 <Typography sx={{fontSize: "0.9rem", fontWeight: 800}}>{name}</Typography>
-                <Typography sx={{fontSize: "0.8rem"}}>{msg}</Typography>
+                <Typography sx={{fontSize: "0.8rem"}}>{latestChat}</Typography>
             </Stack>
             <Stack direction="column" alignItems="center">
                 <Typography sx={{fontSize: "0.8rem", fontWeight: 800}}>{time}</Typography>
@@ -78,15 +42,15 @@ const ChatElement = ({id, img, name, msg, time, unread, pinned, online})=>{
         </Box>
     </Box>) 
 }
-function Chats(){
+function Groups(){
     const dispatch = useDispatch();
     const user_id = useSelector(state => state.auth.userInfo._id);
-    const ChatList = useSelector(state => state.chat.chat);
+    const GroupList = useSelector(state => state.chat.groupChats);
     const [search, setSearch] = useState(false); 
     useEffect(()=>{
         if(socket){
-            socket.emit("user_messages", {user_id}, (data)=>{
-                dispatch(fetchChats({id: user_id, data: data}));
+            socket.emit('get_group_messages', {user_id}, (data)=>{
+                dispatch(FetchGroupChats(data));
             })
         }
     }, [socket])
@@ -123,10 +87,10 @@ function Chats(){
                         alignItems={"center"}
                         justifyContent={"space-between"} 
                     >
-                        <Typography variant="h5">Chats</Typography>
+                        <Typography variant="h5">Groups</Typography>
                         <Stack direction="row">
                             <IconButton onClick={handleOpenDialogBox}>
-                                <Users/>
+                                <Plus/>
                             </IconButton>
                         </Stack>
                     </Stack>
@@ -149,19 +113,19 @@ function Chats(){
                     </Stack>
                 </Stack>
                 <Stack p={2} direction={"column"} spacing={1.5}>
-                    <Typography sx={{color:"#676767", fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center"}}>All Chats <ArrowFatLineDown/></Typography>
+                    <Typography sx={{color:"#676767", fontSize: "1rem", fontWeight: 700, display: "flex", alignItems: "center"}}>All Groups <ArrowFatLineDown/></Typography>
                     {
-                        ChatList.map((chat)=>{
-                            return (<ChatElement key={chat.id} {...chat}/>)
+                        GroupList && GroupList.map((group)=>{
+                            return (<GroupChatElement key={group.group_id} {...group}/>)
                         })
                     }
                 </Stack>
                 
             </Box>
             {
-                openDialog && <Friends open={openDialog} handleClose={handleCloseDialogBox}/>
+                openDialog && <CreateGroup open={openDialog} handleClose={handleCloseDialogBox}/>
             }
         </>
     );
 }
-export default Chats;
+export default Groups;

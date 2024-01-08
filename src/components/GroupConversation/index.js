@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Stack, Typography } from '@mui/material';
-// import Footer from './Footer';
+import Footer from './Footer';
 import Header from './Header';
-// import { Chat } from './Chat';
+import { Chat } from './Chat';
 import { useSelector } from 'react-redux';
 // import { Contact } from './Contact';
 // import Starred from './Starred';
@@ -18,8 +18,8 @@ const GroupConversation = () => {
         <>
           <Stack height={'100%'} maxHeight={'100vh'} width={'100%'}>
             <Header />
-            {/* <Chat /> */}
-            {/* <Footer /> */}
+            <Chat />
+            <Footer />
           </Stack>
           {appOptions.sidebar.open && appOptions.sidebar.type === 'CONTACT' && (
             <Stack width={'320px'}>

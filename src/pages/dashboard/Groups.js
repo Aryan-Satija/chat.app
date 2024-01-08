@@ -7,13 +7,13 @@ import { socket } from "../../socket";
 import { useSelector, useDispatch } from "react-redux";
 import { FetchGroupChats } from "../../redux/slices/chat";
 import { Selectgroup } from "../../redux/slices/app";
-const GroupChatElement = ({id, img, name, latestChat, unread, time})=>{
+const GroupChatElement = ({group_id, img, name, latestChat, unread, time})=>{
     const group_room_id = useSelector((state)=>state.app.sidebar.group_room_id);
     const theme = useTheme();
     const dispatch = useDispatch();
     return(<Box
         sx={{
-            backgroundColor: group_room_id === id ? (theme.palette.primary.main) : (theme.palette.mode === "light" ? "#fff" : theme.palette.background.default),
+            backgroundColor: group_room_id === group_id ? (theme.palette.primary.main) : (theme.palette.mode === "light" ? "#fff" : theme.palette.background.default),
             width: "100%",
             paddingY: 2,
             borderRadius: 1,
@@ -23,7 +23,7 @@ const GroupChatElement = ({id, img, name, latestChat, unread, time})=>{
             cursor: "pointer", 
             justifyContent:"space-between" 
         }}
-        onClick={()=>{dispatch(Selectgroup(id))}}
+        onClick={()=>{dispatch(Selectgroup(group_id))}}
     >
         <Avatar src={img} />
         <Box sx={{display: "flex", width:"170px", justifyContent: "space-between"}}>

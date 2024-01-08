@@ -9,10 +9,8 @@ import useSettings from "../../hooks/useSettings.js";
 import { ThemeSwitch } from './ThemeSwitch.js';
 import { useNavigate } from 'react-router-dom';
 import { setSelect } from '../../redux/slices/app.js';
-
 const Sidebar = () => {
     const userInfo = useSelector((state)=>state.auth.userInfo);
-    console.log(userInfo);
     const theme = useTheme();
     const dispatch = useDispatch();
     const select = useSelector((state) => state.app.sidebar.select)
@@ -37,11 +35,10 @@ const Sidebar = () => {
                 Nav_Buttons.map((icon_obj)=>{
                     return select === icon_obj.index ? (<IconButton key={icon_obj.index} sx={{backgroundColor : theme.palette.primary.main, borderRadius:1.5, color: theme.palette.background.paper}}>
                         {icon_obj.icon}
-                    </IconButton>) : (<IconButton key={icon_obj.index} onClick={()=> {
+                    </IconButton>) : (<IconButton key={icon_obj.index} onClick={()=>{
                                                                                         dispatch(setSelect(icon_obj.index));
-                                                                                        console.log(icon_obj.path);
                                                                                         navigate(icon_obj.path);
-                                                                                     }} >
+                                                                                    }}>
                         {icon_obj.icon}
                     </IconButton>)
                 })

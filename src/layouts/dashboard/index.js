@@ -94,7 +94,7 @@ const DashboardLayout = () => {
   return (
     <Stack direction="row">
       <Sidebar/>
-      <Outlet />
+      <Outlet/>
     </Stack>
   );
 };

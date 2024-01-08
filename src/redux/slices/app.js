@@ -7,7 +7,7 @@ const initialState = {
         select: 0,
         room_id: null,
         group_room_id: null,  
-        chatHistory: []
+        chatHistory: [],
     }
 }
 const slice = createSlice({

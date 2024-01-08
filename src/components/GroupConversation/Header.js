@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Box, Stack, Badge, Avatar, IconButton, Divider} from '@mui/material';
+import { Box, Stack, AvatarGroup, Avatar, IconButton, Divider} from '@mui/material';
 import {styled, useTheme} from '@mui/material/styles';
 import {CaretRight, Phone, VideoCamera } from 'phosphor-react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,51 +9,21 @@ const Header = () => {
     const group_room_id = useSelector((state)=>state.app.sidebar.group_room_id);
     const groupChatList = useSelector((state)=>state.chat.groupChats);
     const group = groupChatList.find((el)=>{
-        return (el.id === group_room_id)
+        return (el.group_id === group_room_id)
     });
     const sidebar = useSelector((state)=>state.app.sidebar)
     const caretRef = useRef(null);
     const dispatch = useDispatch();
-    const StyledBadge = styled(Badge)(({ theme }) => ({
-        '& .MuiBadge-badge': {
-          backgroundColor: '#44b700',
-          color: '#44b700',
-          boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-          '&::after': {
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            borderRadius: '50%',
-            animation: 'ripple 1.2s infinite ease-in-out',
-            border: '1px solid currentColor',
-            content: '""',
-          },
-        },
-        '@keyframes ripple': {
-          '0%': {
-            transform: 'scale(.8)',
-            opacity: 1,
-          },
-          '100%': {
-            transform: 'scale(2.4)',
-            opacity: 0,
-          },
-        },
-    }));
     return (
         <Box p={2} sx={{height:100, backgroundColor: theme.palette.mode === "light" ? "#FBFAFF" : theme.palette.background.paper, boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)", display:"flex", alignItems: "center" }}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" width={"100%"}>
                 <Stack direction="row" alignItems="center" spacing={1.5}>
                     <Stack>
-                        <StyledBadge
-                            overlap="circular"
-                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                            variant="dot"
-                        >
-                            <Avatar src={group.img} sx={{cursor:"pointer"}}/>
-                        </StyledBadge>
+                        <AvatarGroup total={group.participants.length}>
+                            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                            <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+                            <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+                        </AvatarGroup>
                     </Stack>
                     <Stack>
                         <Stack sx={{height: "20px" }} direction={"row"} alignItems={"center"}>
@@ -65,7 +35,6 @@ const Header = () => {
                                 <Phone size={20}/>
                             </IconButton>
                         </Stack>
-                        <Box sx={{fontSize: "0.8rem", fontWeight: 400}}>Online</Box>
                     </Stack>
                 </Stack>
                 <Stack direction="row" alignItems="center" spacing={1.5}>

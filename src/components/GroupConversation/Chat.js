@@ -14,32 +14,31 @@ export const Chat = () => {
         return state.app.sidebar.group_room_id
     })
 
-    // useEffect(()=>{
-    //     if(socket){
-    //         socket.emit("get_messages", {room_id}, (messages)=>{
-    //             dispatch(setChatHistory(messages));
-    //         })
-    //         // scrollToBottom();
-    //     }
-    // }, [room_id]);
-    // useEffect(()=>{
-    //     // scrollToBottom();
-    //     if(socket){
-    //         socket.on("new_message",({conversation_id, message, chat}) => {
-    //             dispatch(AddDirectChat({id: userInfo._id, conversation: chat}))
-    //             if(room_id === conversation_id){
-    //                 dispatch(pushChat(message));
-    //             }
-    //             else{
-    //                 // update chat list....
-    //             }
-    //         })
-    //     }
-    //     return () => {
-    //         socket?.off("new_message");
-    //     }
-    // }, [socket]);
-
+    useEffect(()=>{
+        if(socket){
+            socket.emit("get_group_messages", {group_id: group_room_id}, (messages)=>{
+                dispatch(setChatHistory(messages));
+            })
+        }
+    }, [group_room_id]);
+    useEffect(()=>{
+          if(socket){
+            socket.on("new_group_message",({groupChatDoc}) => {
+                console.log("hello");
+                console.log(groupChatDoc)
+                // dispatch(AddDirectChat({id: userInfo._id, conversation: chat}))
+                if(group_room_id === groupChatDoc._id){
+                    dispatch(pushChat(groupChatDoc.chats.at(-1)));
+                }
+                else{
+                        // update chat list....
+                }
+          })
+        }
+        return () => {
+            socket?.off("new_group_message");
+        }
+    }, [socket]);
     useEffect(()=>{
         (()=>{
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;

@@ -19,7 +19,7 @@ const Header = () => {
             <Stack direction="row" alignItems="center" justifyContent="space-between" width={"100%"}>
                 <Stack direction="row" alignItems="center" spacing={1.5}>
                     <Stack>
-                        <AvatarGroup total={group.participants.length}>
+                        <AvatarGroup total={group?.participants.length}>
                             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
                             <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
                             <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
@@ -27,7 +27,7 @@ const Header = () => {
                     </Stack>
                     <Stack>
                         <Stack sx={{height: "20px" }} direction={"row"} alignItems={"center"}>
-                            <Box sx={{fontSize: "0.9rem", fontWeight: 800}}>{group.name}</Box>
+                            <Box sx={{fontSize: "0.9rem", fontWeight: 800}}>{group?.name}</Box>
                             <IconButton>
                                 <VideoCamera size={20}/>
                             </IconButton>

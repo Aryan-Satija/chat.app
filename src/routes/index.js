@@ -22,11 +22,11 @@ export default function Router() {
       children: [
         { element: <Navigate to={DEFAULT_PATH} replace />, index: true },
         { path: "app", element:<GeneralApp/>},      
-        { path: "groups", element: <GeneralGroupsApp/>},
+        { path: "groups", element:<GeneralGroupsApp/>},
         { path: "settings", element:<Settings/>},
-        { path: "call", element:<Call/> },
-        { path: "404", element:<Page404/> },
-        { path: "*", element:<Navigate to="/404" replace /> },
+        { path: "call", element:<Call/>},
+        { path: "404", element:<Page404/>},
+        { path: "*", element:<Navigate to="/404" replace />},
       ],
     },
     {

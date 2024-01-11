@@ -46,10 +46,12 @@ function Groups(){
     const dispatch = useDispatch();
     const user_id = useSelector(state => state.auth.userInfo._id);
     const GroupList = useSelector(state => state.chat.groupChats);
+    console.log(GroupList);
     const [search, setSearch] = useState(false); 
     useEffect(()=>{
         if(socket){
-            socket.emit('get_group_messages', {user_id}, (data)=>{
+            socket.emit('get_groups', {user_id}, (data)=>{
+                console.log(data);
                 dispatch(FetchGroupChats(data));
             })
         }

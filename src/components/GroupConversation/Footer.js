@@ -165,10 +165,9 @@ const Footer = () => {
     })
     const user_id = useSelector((state)=>state.auth.userInfo._id);
     const groupChats = useSelector((state)=>state.chat.groupChats);
-    // let to = chat.find((el)=>{
-    //   return (room_id == el.id);
-    // });
-    // to = to?.to_user_id;
+    let group = groupChats.find((el)=>{
+      return (group_room_id == el.group_id);
+    });
     function handleEmojiClick(emoji) {
       const input = inputRef.current;
       if (input) {
@@ -242,13 +241,13 @@ const Footer = () => {
               >
                 <IconButton
                   onClick={() => {
-                    // socket.emit("text_message", {
-                    //   message: value,
-                    //   conversation_id: room_id,
-                    //   from: user_id,
-                    //   to,
-                    //   type: containsUrl(value) ? "link" : "text",
-                    // });
+                    socket.emit("group_text_message", {
+                      message: value,
+                      conversation_id: group_room_id,
+                      from: user_id,
+                      to: group.participants,
+                      type: containsUrl(value) ? "link" : "text",
+                    });
                     setValue("");
                   }}
                 >

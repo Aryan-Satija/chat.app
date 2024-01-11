@@ -81,7 +81,7 @@ const chatSlice = createSlice({
           );
         },
         FetchGroupChats:(state, action)=>{
-          state.groupChats = action.payload.map(grp =>{
+            state.groupChats = action.payload.map(grp =>{
             return {
               group_id: grp._id,
               name: grp.name,
@@ -89,13 +89,14 @@ const chatSlice = createSlice({
               participants: grp.participants,
               unread: 0,
               img:grp?.profile,
-              latestChat: grp.chats.length > 0 ? grp.chats.at(-1) : '',
+              latestChat: grp.chats.length > 0 ? grp.chats.at(-1).message : '',
               time: null
             }
           })
         },
         resetChatSlice:(state)=>{
           state.chat = [];
+          state.groupChats = [];
         }
     }
 })

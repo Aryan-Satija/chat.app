@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useTheme} from "@mui/material/styles";
 import {useSelector} from 'react-redux';
-import { Stack, Divider, Typography, Box, Link } from '@mui/material'
+import { Stack, Divider, Typography, Box, Link, Avatar } from '@mui/material'
 import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
 export const Timeline = ({text}) => {
   return (
@@ -13,16 +13,18 @@ export const Timeline = ({text}) => {
   )
 }
 
-export const Message = ({text, from, to}) => {
+export const Message = ({from, message}) => {
     const theme = useTheme();
     const userInfo = useSelector((state)=>state.auth.userInfo)
-    const incoming = (to === userInfo._id); 
+    const outgoing = (from._id === userInfo._id); 
     return (
-    <Stack width={"100%"}>
+    <Stack width={"100%"} justifyContent={outgoing ? "flex-start" : "flex-end"} direction={outgoing ? "row-reverse" : "row"} alignItems={"center"} spacing={2}>
+        <Avatar>
+          <img src={from.avatar}/>
+        </Avatar>
         <Box 
             sx={{ 
                     display:"flex", 
-                    alignSelf: incoming ? 'flex-start' : 'flex-end',
                     justifyContent: "center",
                     alignItems: "center",
                     maxWidth:250, 
@@ -31,7 +33,7 @@ export const Message = ({text, from, to}) => {
                     backgroundColor: theme.palette.background.paper
                 }}
         >
-            <Typography variant='body2'>{text}</Typography>
+            <Typography variant='body2'>{message}</Typography>
         </Box>
     </Stack>
   )

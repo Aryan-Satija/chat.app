@@ -18,7 +18,7 @@ export const Message = ({from, message}) => {
     const userInfo = useSelector((state)=>state.auth.userInfo)
     const outgoing = (from._id === userInfo._id); 
     return (
-    <Stack width={"100%"} justifyContent={outgoing ? "flex-start" : "flex-end"} direction={outgoing ? "row-reverse" : "row"} alignItems={"center"} spacing={2}>
+    <Stack width={"100%"} justifyContent={"flex-start"} direction={outgoing ? "row-reverse" : "row"} alignItems={"center"} spacing={2}>
         <Avatar>
           <img src={from.avatar}/>
         </Avatar>

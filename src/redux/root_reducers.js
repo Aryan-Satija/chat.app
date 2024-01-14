@@ -5,10 +5,6 @@ import appReducer from './slices/app';
 import authReducer from './slices/auth';
 import chatReducer from './slices/chat';
 
-// import audioCallReducer from './slices/audioCall';
-// import videoCallReducer from './slices/videoCall';
-
-
 
 const rootPersistConfig = {
   key: 'root',
@@ -22,8 +18,6 @@ const rootReducer = combineReducers({
   app: appReducer,
   auth: authReducer,
   chat: chatReducer,
-//   audioCall: audioCallReducer,
-//   videoCall: videoCallReducer,
 });
 
 export { rootPersistConfig, rootReducer };

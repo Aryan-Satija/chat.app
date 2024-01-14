@@ -23,12 +23,19 @@ export const Chat = () => {
     }, [group_room_id]);
     useEffect(()=>{
           if(socket){
-            socket.on("new_group_message",({groupChatDoc}) => {
-                console.log("hello");
-                console.log(groupChatDoc)
+            socket.on("new_group_message",({from, groupChatDoc}) => {
                 // dispatch(AddDirectChat({id: userInfo._id, conversation: chat}))
                 if(group_room_id === groupChatDoc._id){
-                    dispatch(pushChat(groupChatDoc.chats.at(-1)));
+                    console.log(from);
+                    console.log(groupChatDoc);
+                    dispatch(pushChat({
+                        from:{
+                            _id: from._id,
+                            name: from.firstName + ' ' + from.lastName,
+                            avatar: from.avatar 
+                        },
+                        message: groupChatDoc.chats.at(-1).message
+                    }));
                 }
                 else{
                         // update chat list....

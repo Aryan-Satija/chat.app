@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
-import { Box, Stack, IconButton, Typography, InputBase, Button, Divider, Avatar, Badge } from "@mui/material";
+import { Box, Stack, IconButton, Typography, InputBase, Button, Divider, Avatar } from "@mui/material";
 import {useTheme, styled, alpha} from "@mui/material/styles";
-import { ArchiveBox, ArrowFatLineDown, MagnifyingGlass, Users, Plus } from "phosphor-react";
+import { ArchiveBox, ArrowFatLineDown, MagnifyingGlass, Plus } from "phosphor-react";
 import { CreateGroup } from "./CreateGroup";
 import { socket } from "../../socket";
 import { useSelector, useDispatch } from "react-redux";

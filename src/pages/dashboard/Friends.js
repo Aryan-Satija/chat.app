@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Dialog, DialogTitle, Slide, Stack, Tabs, Tab, DialogContent } from '@mui/material';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import {
   FetchFriendRequests,

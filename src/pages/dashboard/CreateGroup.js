@@ -2,12 +2,10 @@ import { Avatar, Stack, Dialog,Button, Checkbox, DialogContent, Box, DialogTitle
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { FetchFriends } from '../../services/utilityFunctions/user';
-import {useTheme} from "@mui/material/styles";
 export const CreateGroup = ({open, handleClose}) => {
     const token = useSelector(state => state.auth.token);
     const userInfo = useSelector(state => state.auth.userInfo);
     const [friendList, setFriendList] = useState([]);
-    const theme = useTheme();
     const [formData, setFormData] = useState({
         name: '',
         admin: userInfo._id,

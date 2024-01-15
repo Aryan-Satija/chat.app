@@ -21,5 +21,8 @@
 
 ![profile_update_dark_mode_page](https://github.com/M74JJI/whatsapp_fe/assets/124520942/0cdd4a88-7431-441a-810c-02e7e0651ffb)
 
+- Group Chatting
+
+![image](https://github.com/Aryan-Satija/chatapp_server/assets/124520942/83ad22fc-20fa-4747-827c-64f9fc3cf31b)
 
 
